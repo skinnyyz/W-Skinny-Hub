@@ -1,30 +1,25 @@
---[[
-	_   _       _   _    _ _____ 
-	| \ | |     | | | |  | |_   _|
-	|  \| | __ _| |_| |  | | | |  
-	| . ` |/ _` | __| |  | | | |  
-	| |\  | (_| | |_| |__| |_| |_ 
-	|_| \_|\__,_|\__|\____/|_____|
-
-    Rewrited from Wind UI (Footagesus)
-    Github: https://github.com/Footagesus/WindUI
-
-	Developed by: .chill.z. (Chillz)
-	Owned by: ardyxz (SkinnyHub)
-
-	This User Interface is open source and for public usage.
-]]
-
--- Instances: 271 | Scripts: 0 | Modules: 3 | Tags: 0
 local SkinnyHub = {};
-
--- SkinnyHub
+local cloneref = cloneref or function(...) return ... end
+local function DestroyOldUI()
+	local locations = {
+		gethui and gethui(),
+		pcall(function() return game:GetService("CoreGui") end) and cloneref(game:GetService("CoreGui")),
+		game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+	}
+	for _, location in ipairs(locations) do
+		if location then
+			local oldUI = location:FindFirstChild("SkinnyHub")
+			if oldUI then
+				oldUI:Destroy()
+			end
+		end
+	end
+end
+DestroyOldUI()
 SkinnyHub["1"] = Instance.new("ScreenGui");
 SkinnyHub["1"]["Name"] = [[SkinnyHub]];
 SkinnyHub["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
 SkinnyHub["1"]["ResetOnSpawn"] = false;
-
-local cloneref = cloneref or function(...) return ... end
 
 if protect_gui then
 	protect_gui(SkinnyHub["1"])
@@ -3334,7 +3329,7 @@ SkinnyHub_MODULES[SkinnyHub["3e"]] = {
 
 					newButton.Visible = true
 
-					-- Desabilita todos os gradients do botao (cor solida)
+					-- Desabilita todos os gradients (cor solida cinza escuro)
 					for _, g in ipairs(newButton.Frame:GetChildren()) do
 						if g:IsA("UIGradient") then
 							g.Enabled = false
@@ -3358,23 +3353,16 @@ SkinnyHub_MODULES[SkinnyHub["3e"]] = {
 
 					newButton.MouseButton1Down:Connect(function()
 						if not ButtonData.Locked then
-							-- Cor solida azul (sem gradient)
-							Tween(newButton.Frame, {BackgroundColor3 = Color3.fromRGB(0, 135, 213)}, TweenConfigs.Global)
+							-- Cor cinza escuro solida (mesma cor do botao normal)
+							Tween(newButton.Frame, {BackgroundColor3 = Color3.fromRGB(42, 45, 52)}, TweenConfigs.Global)
 							Tween(newButton.Frame, {BackgroundTransparency = 0}, TweenConfigs.Global)
-							Tween(newButton.Frame.Title, {TextColor3 = Color3.fromRGB(255,255,255)}, TweenConfigs.Global)
-							Tween(newButton.Frame.Title.ClickIcon, {ImageColor3 = Color3.fromRGB(255,255,255)}, TweenConfigs.Global)
-							Tween(newButton.Frame.Description, {TextColor3 = Color3.fromRGB(255,255,255)}, TweenConfigs.Global)
 						end
 					end)
 
 					newButton.MouseButton1Up:Connect(function()
 						if not ButtonData.Locked then
-							-- Volta para cor original
-							Tween(newButton.Frame, {BackgroundColor3 = Color3.fromRGB(42, 45, 52)}, TweenConfigs.Global)
+							-- Volta transparente
 							Tween(newButton.Frame, {BackgroundTransparency = 1}, TweenConfigs.Global)
-							Tween(newButton.Frame.Title, {TextColor3 = Color3.fromRGB(196, 203, 218)}, TweenConfigs.Global)
-							Tween(newButton.Frame.Title.ClickIcon, {ImageColor3 = Color3.fromRGB(196, 203, 218)}, TweenConfigs.Global)
-							Tween(newButton.Frame.Description, {TextColor3 = Color3.fromRGB(196, 203, 218)}, TweenConfigs.Global)
 						end
 					end)
 
